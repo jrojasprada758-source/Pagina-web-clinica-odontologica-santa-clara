@@ -405,33 +405,6 @@
         background: #1DA851;
         outline: none;
       }
-
-      /* WIDGET FECHA Y HORA */
-      #widget-hora {
-        position: fixed;
-        top: 70px;
-        left: 10px;
-        background-color: rgba(30, 120, 180, 0.9);
-        color: white;
-        padding: 8px 12px;
-        border-radius: 8px;
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        z-index: 9999;
-        text-align: center;
-        user-select: none;
-        transition: background-color 0.3s ease, color 0.3s ease;
-      }
-      body.dark #widget-hora {
-        background-color: rgba(15, 74, 109, 0.9);
-        color: #b0d4f1;
-      }
-      #wi
-      dget-hora span {
-        display: block;
-      }
-
       /* Responsive */
 /* Ajustes para móvil */
 @media (max-width: 768px) {
@@ -597,13 +570,6 @@
         />
         <button id="sendBtn" aria-label="Enviar mensaje">Enviar</button>
       </div>
-    </div>
-
-    <div id="widget-hora" aria-live="polite" aria-atomic="true" aria-label="Fecha y hora actuales">
-      🦷
-      <span id="fecha"></span>
-      <span id="hora"></span>
-    </div>
 
     <script>
       // Modo oscuro toggle
@@ -677,20 +643,6 @@
           window.open(url, '_blank');
         }, 1500);
       }
-
-      // Widget fecha y hora
-      function actualizarHoraFecha() {
-        const fechaEl = document.getElementById("fecha");
-        const horaEl = document.getElementById("hora");
-        const ahora = new Date();
-        const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        fechaEl.textContent = ahora.toLocaleDateString('es-ES', opcionesFecha);
-        const hora = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        horaEl.textContent = hora;
-      }
-      setInterval(actualizarHoraFecha, 1000);
-      actualizarHoraFecha();
-
       // Slider imágenes con transición y flechas
       const images = ['dentista.jpg', 'dentista2.jpg', 'dentista3.jpg'];
       let currentIndex = 0;
