@@ -432,7 +432,14 @@
       }
 
       /* Responsive */
+/* Ajustes para móvil */
 @media (max-width: 768px) {
+  /* Ocultar flechas en móvil */
+  .arrow {
+    display: none;
+  }
+
+  /* Menú más compacto */
   nav {
     flex-wrap: wrap;
     justify-content: center;
@@ -441,26 +448,23 @@
     margin: 5px 10px;
     font-size: 14px;
   }
+
+  /* Hero adaptado */
   .hero {
     flex-direction: column;
-    padding: 20px 15px; /* antes 40px 20px o 100px 150px */
+    padding: 20px 15px;
   }
   .hero-content {
     max-width: 100%;
     margin-bottom: 20px;
-    text-align: center; /* centrado para móvil */
+    text-align: center;
   }
   .hero-image-wrapper img {
     width: 100%;
     height: auto;
   }
-  .arrow.arrow-left,
-  .arrow.arrow-right {
-    left: 10px !important;
-    right: 10px !important;
-    border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  }
+
+  /* Secciones */
   .services, .specialists {
     flex-direction: column;
     align-items: center;
@@ -468,6 +472,8 @@
   .card {
     width: 90%;
   }
+
+  /* Formulario */
   .appointment-form {
     flex-direction: column;
   }
@@ -475,6 +481,7 @@
     grid-template-columns: 1fr;
   }
 }
+
 
     </style>
   </head>
