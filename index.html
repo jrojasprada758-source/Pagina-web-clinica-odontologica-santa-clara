@@ -1,0 +1,997 @@
+  <!DOCTYPE html>
+  <html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Clínica Odontológica Santa Clara</title>
+    <style>
+      /* Reset y base */
+      body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      body.dark {
+        background-color: #121212;
+        color: #ddd;
+      }
+      header {
+        background-color: #1E78B4;
+        color: white;
+        padding: 20px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color 0.3s ease;
+      }
+      body.dark header {
+        background-color: #0f4a6d;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+      nav a {
+        color: white;
+        text-decoration: none;
+        margin-left: 20px;
+        font-weight: bold;
+        transition: color 0.3s ease;
+      }
+      body.dark nav a {
+        color: #b0d4f1;
+      }
+      nav a:hover,
+      nav a:focus {
+        text-decoration: underline;
+        outline: none;
+      }
+
+      /* Botón toggle modo oscuro */
+      #darkModeToggle {
+        background: transparent;
+        border: 2px solid white;
+        color: white;
+        border-radius: 5px;
+        padding: 6px 12px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      #darkModeToggle:hover,
+      #darkModeToggle:focus {
+        background-color: white;
+        color: #1E78B4;
+        outline: none;
+      }
+      body.dark #darkModeToggle {
+        border-color: #b0d4f1;
+        color: #b0d4f1;
+      }
+      body.dark #darkModeToggle:hover,
+      body.dark #darkModeToggle:focus {
+        background-color: #b0d4f1;
+        color: #0f4a6d;
+      }
+
+      /* Hero */
+      .hero {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 100px 150px;
+        position: relative;
+        background-color: #1E78B4;
+        border-radius: 10px;
+        overflow: hidden;
+        color: white;
+        transition: background-color 0.3s ease;
+      }
+      body.dark .hero {
+        background-color: #0f4a6d;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 55%;
+        text-align: left;
+      }
+      .hero h2 {
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+      .hero p {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+      .hero button {
+        background-color: #25D366;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.6s ease;
+        animation: pulse 3s infinite;
+      }
+      .hero button:hover,
+      .hero button:focus {
+        background-color: #1DA851;
+        outline: none;
+        transform: scale(1.05);
+        animation-play-state: paused;
+      }
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+      }
+
+      /* Contenedor imagen */
+      .hero-image-wrapper {
+        position: relative;
+        display: inline-block;
+        z-index: 1;
+        touch-action: pan-y;
+        user-select: none;
+      }
+      .hero-image-wrapper img {
+        width: 400px;
+        height: 350px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(37, 211, 102, 0.4);
+        object-fit: cover;
+        display: block;
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        opacity: 1;
+        transform: translateX(0);
+        position: relative;
+        z-index: 1;
+      }
+      .hero-image-wrapper img[loading="lazy"] {
+        filter: blur(5px);
+        transition: filter 0.5s ease;
+      }
+      .hero-image-wrapper img[loading="lazy"].loaded {
+        filter: none;
+      }
+      .fade-out {
+        opacity: 0;
+        transform: translateX(30px);
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      /* Flechas */
+      .arrow {
+        cursor: pointer;
+        user-select: none;
+        width: 50px;
+        height: 50px;
+        background: white;
+        border-radius: 50%;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: 
+          background-color 0.3s ease, 
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        z-index: 20;
+        border: 2px solid #1E78B4;
+        color: #1E78B4;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 1;
+        box-sizing: border-box;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .arrow:hover,
+      .arrow:focus {
+        background-color: #25D366;
+        color: white;
+        box-shadow: 0 6px 15px rgba(37, 211, 102, 0.7);
+        transform: translateY(-50%) scale(1.1);
+        border-color: #25D366;
+        outline: none;
+      }
+      .arrow-left {
+        left: calc(50% - 250px - 75px);
+        border-top-right-radius: 12px;
+        border-bottom-right-radius: 12px;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+      }
+      .arrow-right {
+        right: calc(50% - 250px - 75px);
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;
+        box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+      }
+
+      .section {
+        padding: 60px 40px;
+        text-align: center;
+        transition: color 0.3s ease;
+      }
+      body.dark .section h3 {
+        color: #8ac8f9;
+      }
+      .section h3 {
+        font-size: 28px;
+        margin-bottom: 30px;
+        color: #1E78B4;
+      }
+      .services, .specialists {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+      }
+      .card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        padding: 20px;
+        width: 250px;
+        text-align: center;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      body.dark .card {
+        background-color: #1e1e1e;
+        color: #ccc;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      }
+      .card img {
+        width: 60px;
+        margin-bottom: 15px;
+      }
+      .card img[loading="lazy"] {
+        filter: blur(3px);
+        transition: filter 0.5s ease;
+      }
+      .card img[loading="lazy"].loaded {
+        filter: none;
+      }
+      .card h4 {
+        margin: 10px 0;
+        color: #1E78B4;
+      }
+      body.dark .card h4 {
+        color: #8ac8f9;
+      }
+      .card p {
+        font-size: 14px;
+        color: #555;
+      }
+      body.dark .card p {
+        color: #aaa;
+      }
+
+      /* WhatsApp botón */
+      .whatsapp-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #25D366;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        cursor: pointer;
+        z-index: 1000;
+        transition: box-shadow 0.3s ease;
+      }
+      .whatsapp-btn:hover,
+      .whatsapp-btn:focus {
+        box-shadow: 0 4px 12px rgba(37, 211, 102, 0.8);
+        outline: none;
+      }
+      .whatsapp-btn img {
+        width: 35px;
+        height: 35px;
+      }
+
+      /* CHATBOX */
+      .chat-box {
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        bottom: 90px;
+        right: 20px;
+        width: 300px;
+        height: 400px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        overflow: hidden;
+        z-index: 1100;
+        opacity: 0;
+        transform: scale(0.9);
+        transition: all 0.3s ease;
+        font-family: 'Segoe UI', sans-serif;
+      }
+      .chat-box.open {
+        display: flex;
+        opacity: 1;
+        transform: scale(1);
+      }
+      .chat-header {
+        background: #25D366;
+        color: white;
+        padding: 10px;
+        font-weight: bold;
+        text-align: center;
+      }
+      .chat-messages {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+        font-size: 14px;
+        background: #f5f5f5;
+        display: flex;
+        flex-direction: column;
+      }
+      body.dark .chat-messages {
+        background: #2a2a2a;
+        color: #ddd;
+      }
+      .chat-message {
+        margin: 5px 0;
+        padding: 8px;
+        border-radius: 5px;
+        max-width: 80%;
+        word-wrap: break-word;
+      }
+      .bot-message {
+        background: #e1ffc7;
+        align-self: flex-start;
+      }
+      body.dark .bot-message {
+        background: #3d773d;
+        color: #d1f0d1;
+      }
+      .user-message {
+        background: #DCF8C6;
+        align-self: flex-end;
+      }
+      body.dark .user-message {
+        background: #6f9a6f;
+        color: #e0f0e0;
+      }
+      .chat-input {
+        display: flex;
+        border-top: 1px solid #ddd;
+      }
+      body.dark .chat-input {
+        border-color: #444;
+      }
+      .chat-input input {
+        flex: 1;
+        border: none;
+        padding: 10px;
+        font-size: 14px;
+        background: white;
+        color: black;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      body.dark .chat-input input {
+        background: #1e1e1e;
+        color: #ccc;
+      }
+      .chat-input input:focus {
+        outline: 2px solid #25D366;
+      }
+      .chat-input button {
+        background: #25D366;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .chat-input button:hover,
+      .chat-input button:focus {
+        background: #1DA851;
+        outline: none;
+      }
+
+      /* WIDGET FECHA Y HORA */
+      #widget-hora {
+        position: fixed;
+        top: 70px;
+        left: 10px;
+        background-color: rgba(30, 120, 180, 0.9);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        z-index: 9999;
+        text-align: center;
+        user-select: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      body.dark #widget-hora {
+        background-color: rgba(15, 74, 109, 0.9);
+        color: #b0d4f1;
+      }
+      #widget-hora span {
+        display: block;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        nav {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        nav a {
+          margin: 5px 10px;
+          font-size: 14px;
+        }
+        .chat-box {
+          width: 90%;
+          right: 5%;
+          bottom: 80px;
+        }
+        .hero {
+          flex-direction: column;
+          padding: 40px 20px;
+          min-height: auto;
+        }
+        .hero-content {
+          max-width: 100%;
+          margin-bottom: 20px;
+        }
+        .hero-image-wrapper img {
+          width: 100%;
+          height: auto;
+          margin: 0 auto;
+        }
+        .arrow.arrow-left {
+          left: 10px !important;
+          border-radius: 50%;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .arrow.arrow-right {
+          right: 10px !important;
+          border-radius: 50%;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <header>
+      <h1>Clínica Odontológica Santa Clara</h1>
+      <nav>
+        <a href="#">Inicio</a>
+        <a href="#">Servicios</a>
+        <a href="#">Especialidades</a>
+        <a href="#">Nuestro Equipo</a>
+        <a href="#">Promociones</a>
+        <a href="#">Contacto</a>
+      </nav>
+      <button id="darkModeToggle" aria-pressed="false" aria-label="Cambiar modo oscuro">Modo Oscuro</button>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h2>Sonríe con confianza</h2>
+        <p>Ofrecemos atención dental de alta calidad para toda la familia.</p>
+        <button>Agendar cita</button>
+      </div>
+
+      <div class="hero-image-wrapper" id="heroImageWrapper">
+        <img
+          src="dentista.jpg"
+          alt="Imagen Hero"
+          id="heroImage"
+          loading="lazy"
+          decoding="async"
+          width="400"
+          height="350"
+        />
+        <div
+          class="arrow arrow-left"
+          id="prev"
+          aria-label="Imagen anterior"
+          role="button"
+          tabindex="0"
+        >&#8249;</div>
+        <div
+          class="arrow arrow-right"
+          id="next"
+          aria-label="Imagen siguiente"
+          role="button"
+          tabindex="0"
+        >&#8250;</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Nuestros Servicios</h3>
+      <div class="services">
+        <div class="card">
+          <img src="revision-icon.png" alt="Revisión Dental" loading="lazy" decoding="async" />
+          <h4>Revisión Dental</h4>
+          <p>Chequeos regulares para mantener tu salud bucal en óptimas condiciones.</p>
+        </div>
+        <div class="card">
+          <img src="implantes-icon.png" alt="Implantes Dentales" loading="lazy" decoding="async" />
+          <h4>Implantes Dentales</h4>
+          <p>Soluciones permanentes y estéticas para reemplazar dientes perdidos.</p>
+        </div>
+        <div class="card">
+          <img src="ortodoncia-icon.png" alt="Ortodoncia" loading="lazy" decoding="async" />
+          <h4>Ortodoncia</h4>
+          <p>Tratamientos para alinear tus dientes y mejorar tu sonrisa.</p>
+        </div>
+        <div class="card">
+          <img src="blanqueamiento-icon.png" alt="Blanqueamiento" loading="lazy" decoding="async" />
+          <h4>Blanqueamiento</h4>
+          <p>Recupera el brillo natural de tus dientes con técnicas seguras.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>Especialidades</h3>
+      <div class="specialists">
+        <div class="card">
+          <img src="dr-perez.jpg" alt="Dr. Pérez" loading="lazy" decoding="async" />
+          <h4>Dr. Pérez</h4>
+          <p>Endodoncista con más de 15 años de experiencia en tratamientos de raíz.</p>
+        </div>
+        <div class="card">
+          <img src="dra-gomez.jpg" alt="Dra. Gómez" loading="lazy" decoding="async" />
+          <h4>Dra. Gómez</h4>
+          <p>Ortodoncista especializada en corrección dental para niños y adultos.</p>
+        </div>
+        <div class="card">
+          <img src="dr-rojas.jpg" alt="Dr. Rojas" loading="lazy" decoding="async" />
+          <h4>Dr. Rojas</h4>
+          <p>Periodoncista enfocado en salud de encías y estética gingival.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="whatsapp-btn" id="whatsappBtn" role="button" tabindex="0" aria-label="Abrir chat de WhatsApp">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+    </div>
+
+    <div class="chat-box" id="chatBox" aria-live="polite" aria-relevant="additions">
+      <div class="chat-header">Atención al Cliente</div>
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="chat-input">
+        <input
+          type="text"
+          id="chatInput"
+          placeholder="Escribe tu mensaje..."
+          aria-label="Escribe tu mensaje"
+        />
+        <button id="sendBtn" aria-label="Enviar mensaje">Enviar</button>
+      </div>
+    </div>
+
+    <div id="widget-hora" aria-live="polite" aria-atomic="true" aria-label="Fecha y hora actuales">
+      🦷
+      <span id="fecha"></span>
+      <span id="hora"></span>
+    </div>
+
+    <script>
+      // Modo oscuro toggle
+      const darkModeToggle = document.getElementById('darkModeToggle');
+      const bodyEl = document.body;
+      darkModeToggle.addEventListener('click', () => {
+        const enabled = bodyEl.classList.toggle('dark');
+        darkModeToggle.setAttribute('aria-pressed', enabled.toString());
+        darkModeToggle.textContent = enabled ? 'Modo Claro' : 'Modo Oscuro';
+      });
+
+      // Lazy load image loaded class remover filtro blur
+      document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+        img.addEventListener('load', () => {
+          img.classList.add('loaded');
+        });
+      });
+
+      // Chat funcionalidad
+      const whatsappBtn = document.getElementById('whatsappBtn');
+      const chatBox = document.getElementById('chatBox');
+      const chatMessages = document.getElementById('chatMessages');
+      const chatInput = document.getElementById('chatInput');
+      const sendBtn = document.getElementById('sendBtn');
+      const phone = '573116615417';
+
+      whatsappBtn.addEventListener('click', () => {
+        chatBox.classList.toggle('open');
+        if (chatBox.classList.contains('open') && chatMessages.innerHTML.trim() === '') {
+          addBotMessage("👋 ¡Hola! Bienvenido a la Clínica Odontológica Santa Clara. Cuéntanos en qué podemos ayudarte.");
+        }
+        if(chatBox.classList.contains('open')){
+          chatInput.focus();
+        }
+      });
+      whatsappBtn.addEventListener('keypress', e => {
+        if(e.key === 'Enter' || e.key === ' ') whatsappBtn.click();
+      });
+
+      sendBtn.addEventListener('click', sendMessage);
+      chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+      });
+
+      function addBotMessage(text) {
+        const msgElem = document.createElement('div');
+        msgElem.classList.add('chat-message', 'bot-message');
+        msgElem.textContent = text;
+        chatMessages.appendChild(msgElem);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      function addUserMessage(text) {
+        const msgElem = document.createElement('div');
+        msgElem.classList.add('chat-message', 'user-message');
+        msgElem.textContent = text;
+        chatMessages.appendChild(msgElem);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      function sendMessage() {
+        const message = chatInput.value.trim();
+        if (message === '') return;
+        addUserMessage(message);
+        chatInput.value = '';
+        setTimeout(() => {
+          addBotMessage("✅ Gracias por tu mensaje. Un asesor te atenderá en WhatsApp en un momento...");
+        }, 500);
+        setTimeout(() => {
+          const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+          window.open(url, '_blank');
+        }, 1500);
+      }
+
+      // Widget fecha y hora
+      function actualizarHoraFecha() {
+        const fechaEl = document.getElementById("fecha");
+        const horaEl = document.getElementById("hora");
+        const ahora = new Date();
+        const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        fechaEl.textContent = ahora.toLocaleDateString('es-ES', opcionesFecha);
+        const hora = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        horaEl.textContent = hora;
+      }
+      setInterval(actualizarHoraFecha, 1000);
+      actualizarHoraFecha();
+
+      // Slider imágenes con transición y flechas
+      const images = ['dentista.jpg', 'dentista2.jpg', 'dentista3.jpg'];
+      let currentIndex = 0;
+      const heroImage = document.getElementById('heroImage');
+      const prevBtn = document.getElementById('prev');
+      const nextBtn = document.getElementById('next');
+      let isTransitioning = false;
+
+      function changeImage(newIndex) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        
+        const tempImg = document.createElement('img');
+        tempImg.src = images[newIndex];
+        tempImg.alt = heroImage.alt;
+        tempImg.loading = 'lazy';
+        tempImg.decoding = 'async';
+        tempImg.style.position = 'absolute';
+        tempImg.style.top = '0';
+        tempImg.style.left = '0';
+        tempImg.style.width = '400px';
+        tempImg.style.height = '350px';
+        tempImg.style.borderRadius = '10px';
+        tempImg.style.objectFit = 'cover';
+        tempImg.style.boxShadow = '0 0 15px rgba(37, 211, 102, 0.4)';
+        tempImg.style.opacity = '0';
+        tempImg.style.transform = 'translateX(30px)';
+        tempImg.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        tempImg.id = 'tempHeroImage';
+
+        const wrapper = heroImage.parentElement;
+        wrapper.appendChild(tempImg);
+
+        // Forzar reflow
+        void tempImg.offsetWidth;
+
+        // Animar entrada imagen nueva
+        tempImg.style.opacity = '1';
+        tempImg.style.transform = 'translateX(0)';
+
+        // Animar salida imagen actual
+        heroImage.style.opacity = '0';
+        heroImage.style.transform = 'translateX(-30px)';
+
+        tempImg.addEventListener('transitionend', () => {
+          heroImage.src = images[newIndex];
+          heroImage.style.opacity = '1';
+          heroImage.style.transform = 'translateX(0)';
+          tempImg.remove();
+          currentIndex = newIndex;
+          isTransitioning = false;
+        }, { once: true });
+      }
+
+      prevBtn.addEventListener('click', () => {
+        let newIndex = (currentIndex - 1 + images.length) % images.length;
+        changeImage(newIndex);
+      });
+      nextBtn.addEventListener('click', () => {
+        let newIndex = (currentIndex + 1) % images.length;
+        changeImage(newIndex);
+      });
+
+      prevBtn.addEventListener('keypress', e => {
+        if(e.key === 'Enter' || e.key === ' ') prevBtn.click();
+      });
+      nextBtn.addEventListener('keypress', e => {
+        if(e.key === 'Enter' || e.key === ' ') nextBtn.click();
+      });
+
+      // Swipe táctil para hero images
+      const heroWrapper = document.getElementById('heroImageWrapper');
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      heroWrapper.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      heroWrapper.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleGesture();
+      }, { passive: true });
+
+      function handleGesture() {
+        if (isTransitioning) return; // evitar múltiples cambios simultáneos
+        const diff = touchEndX - touchStartX;
+        const swipeThreshold = 40; // mínimo px para considerar swipe
+        if (diff > swipeThreshold) {
+          // swipe derecha -> imagen anterior
+          let newIndex = (currentIndex - 1 + images.length) % images.length;
+          changeImage(newIndex);
+        } else if (diff < -swipeThreshold) {
+          // swipe izquierda -> imagen siguiente
+          let newIndex = (currentIndex + 1) % images.length;
+          changeImage(newIndex);
+        }
+      }
+
+      // Inicializar imagen principal
+      heroImage.src = images[currentIndex];
+    </script>
+
+<!-- FORMULARIO -->
+<section class="form-section">
+  <div class="form-container">
+    <form class="appointment-form">
+      <div class="form-left">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nombre*</label>
+            <input type="text" name="nombre" required>
+          </div>
+          <div class="form-group">
+            <label>Apellido*</label>
+            <input type="text" name="apellido" required>
+          </div>
+
+          <div class="form-group">
+            <label>Correo*</label>
+            <input type="email" name="correo" required>
+          </div>
+          <div class="form-group">
+            <label>Teléfono*</label>
+            <input type="tel" name="telefono" placeholder="10 dígitos" required>
+          </div>
+
+          <div class="form-group">
+            <label>Tipo de Identificación*</label>
+            <select name="tipoId" required>
+              <option value="">Selecciona</option>
+              <option>Tarjeta de Identidad</option>
+              <option>Cédula</option>
+              <option>Pasaporte</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Número documento*</label>
+            <input type="text" name="documento" required>
+          </div>
+
+          <div class="form-group">
+            <label>Servicio*</label>
+            <select name="servicio" required>
+              <option>Ortodoncia</option>
+              <option>Implantes</option>
+              <option>Revisión</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Ciudad*</label>
+            <select name="ciudad">
+              <option>Girardot</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Sede*</label>
+            <select name="sede" required>
+              <option>Sede Girardot</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Horario*</label>
+            <select name="horario" required>
+              <option value="">Selecciona</option>
+              <option>Mañana</option>
+              <option>Tarde</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="privacy-check">
+          <input type="checkbox" required> Acepto la política de privacidad.
+        </div>
+
+        <button type="submit" class="submit-btn">SOLICITAR CITA</button>
+      </div>
+
+      <!-- MAPA -->
+      <div class="form-right">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3978.996741706911!2d-74.7996195!3d4.308634899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f0eebba3a75e1%3A0xc8912f24b33c4d57!2sCalle%2021%20%237-29%2C%20Girardot%2C%20Cundinamarca%2C%20Colombia!5e0!3m2!1ses!2sco!4v1691691691691!5m2!1ses!2sco"
+          width="100%"
+          height="100%"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy">
+        </iframe>
+      </div>
+    </form>
+  </div>
+</section>
+
+<style>
+.form-section {
+  padding: 30px;
+  background: #fff;
+}
+.form-container {
+  display: flex;
+  justify-content: center;
+}
+.appointment-form {
+  display: flex;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+  max-width: 850px;
+  width: 100%;
+}
+.form-left {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 15px;
+}
+.form-group label {
+  font-weight: bold;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 4px;
+}
+.form-group input,
+.form-group select {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  width: 100%;
+}
+.privacy-check {
+  margin-top: 15px;
+  font-size: 0.85rem;
+}
+.submit-btn {
+  background-color: #002B5C;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin-top: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+.submit-btn:hover {
+  background-color: #004080;
+}
+.form-right {
+  flex: 1;
+  min-height: 400px;
+}
+.form-right iframe {
+  width: 100%;
+  height: 100%;
+}
+@media(max-width: 768px) {
+  .appointment-form {
+    flex-direction: column;
+  }
+  .form-right {
+    order: -1;
+    min-height: 250px;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<script>
+document.querySelector(".appointment-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    let nombre = document.querySelector("[name='nombre']").value;
+    let apellido = document.querySelector("[name='apellido']").value;
+    let correo = document.querySelector("[name='correo']").value;
+    let telefono = document.querySelector("[name='telefono']").value;
+    let tipoId = document.querySelector("[name='tipoId']").value;
+    let documento = document.querySelector("[name='documento']").value;
+    let servicio = document.querySelector("[name='servicio']").value;
+    let ciudad = document.querySelector("[name='ciudad']").value;
+    let sede = document.querySelector("[name='sede']").value;
+    let horario = document.querySelector("[name='horario']").value;
+
+    let mensaje = `Hola, me colaboran con la siguiente cita:\n
+Nombre: ${nombre} ${apellido}
+Correo: ${correo}
+Teléfono: ${telefono}
+Tipo ID: ${tipoId}
+Documento: ${documento}
+Servicio: ${servicio}
+Ciudad: ${ciudad}
+Sede: ${sede}
+Horario: ${horario}`;
+
+    let numeroWhatsApp = "573212960630";
+    let url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+
+    window.open(url, "_blank");
+});
+</script>
+
+
+  </body>
+</html>
+
+
+
