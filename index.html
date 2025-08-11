@@ -432,45 +432,50 @@
       }
 
       /* Responsive */
-      @media (max-width: 768px) {
-        nav {
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-        nav a {
-          margin: 5px 10px;
-          font-size: 14px;
-        }
-        .chat-box {
-          width: 90%;
-          right: 5%;
-          bottom: 80px;
-        }
-        .hero {
-          flex-direction: column;
-          padding: 40px 20px;
-          min-height: auto;
-        }
-        .hero-content {
-          max-width: 100%;
-          margin-bottom: 20px;
-        }
-        .hero-image-wrapper img {
-          width: 100%;
-          height: auto;
-          margin: 0 auto;
-        }
-        .arrow.arrow-left {
-          left: 10px !important;
-          border-radius: 50%;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        .arrow.arrow-right {
-          right: 10px !important;
-          border-radius: 50%;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-      }
+@media (max-width: 768px) {
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  nav a {
+    margin: 5px 10px;
+    font-size: 14px;
+  }
+  .hero {
+    flex-direction: column;
+    padding: 20px 15px; /* antes 40px 20px o 100px 150px */
+  }
+  .hero-content {
+    max-width: 100%;
+    margin-bottom: 20px;
+    text-align: center; /* centrado para móvil */
+  }
+  .hero-image-wrapper img {
+    width: 100%;
+    height: auto;
+  }
+  .arrow.arrow-left,
+  .arrow.arrow-right {
+    left: 10px !important;
+    right: 10px !important;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  .services, .specialists {
+    flex-direction: column;
+    align-items: center;
+  }
+  .card {
+    width: 90%;
+  }
+  .appointment-form {
+    flex-direction: column;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
     </style>
   </head>
   <body>
