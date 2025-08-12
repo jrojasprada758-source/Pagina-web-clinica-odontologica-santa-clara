@@ -9,16 +9,16 @@
       body {
         margin: 0;
         font-family: 'Segoe UI', sans-serif;
-        background-color: #f5f5f5;
+        background-color: #26a69a;
         color: #333;
         transition: background-color 0.3s ease, color 0.3s ease;
       }
       body.dark {
         background-color: #121212;
-        color: #ddd;
+        color: white;
       }
       header {
-        background-color: #1E78B4;
+        background-color: #26a69a;
         color: white;
         padding: 20px 40px;
         display: flex;
@@ -63,7 +63,7 @@
       #darkModeToggle:hover,
       #darkModeToggle:focus {
         background-color: white;
-        color: #1E78B4;
+        color: #26a69a;
         outline: none;
       }
       body.dark #darkModeToggle {
@@ -83,7 +83,7 @@
         justify-content: space-between;
         padding: 100px 150px;
         position: relative;
-        background-color: #1E78B4;
+        background-color: #26a69a;
         border-radius: 10px;
         overflow: hidden;
         color: white;
@@ -185,8 +185,8 @@
           transform 0.3s ease,
           box-shadow 0.3s ease;
         z-index: 20;
-        border: 2px solid #1E78B4;
-        color: #1E78B4;
+        border: 2px solid white;
+        color: #26a69a;
         font-weight: bold;
         font-size: 24px;
         line-height: 1;
@@ -222,12 +222,12 @@
         transition: color 0.3s ease;
       }
       body.dark .section h3 {
-        color: #8ac8f9;
+        color: #000000;
       }
       .section h3 {
         font-size: 28px;
         margin-bottom: 30px;
-        color: #1E78B4;
+        color: #000000;
       }
       .services, .specialists {
         display: flex;
@@ -262,7 +262,7 @@
       }
       .card h4 {
         margin: 10px 0;
-        color: #1E78B4;
+        color: #555;
       }
       body.dark .card h4 {
         color: #8ac8f9;
@@ -406,31 +406,6 @@
         outline: none;
       }
 
-      /* WIDGET FECHA Y HORA */
-      #widget-hora {
-        position: fixed;
-        top: 70px;
-        left: 10px;
-        background-color: rgba(30, 120, 180, 0.9);
-        color: white;
-        padding: 8px 12px;
-        border-radius: 8px;
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        z-index: 9999;
-        text-align: center;
-        user-select: none;
-        transition: background-color 0.3s ease, color 0.3s ease;
-      }
-      body.dark #widget-hora {
-        background-color: rgba(15, 74, 109, 0.9);
-        color: #b0d4f1;
-      }
-      #widget-hora span {
-        display: block;
-      }
-
       /* Responsive */
       @media (max-width: 768px) {
         nav {
@@ -471,13 +446,44 @@
           box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
       }
+/* Ajuste solo para móviles: menú debajo del título y a la izquierda */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  header nav {
+    order: 1;
+    margin-top: 5px;
+    margin-left: 0;
+    display: flex;
+    flex-direction: column; /* hace que los enlaces bajen uno debajo del otro */
+    gap: 6px; /* espacio entre enlaces */
+  }
+  header nav a {
+    display: block;
+    font-size: 14px;
+    color: white;
+    text-decoration: none;
+  }
+  header h1 {
+    order: 0;
+  }
+}
+
+</style>
+
     </style>
   </head>
   <body>
 
     <header>
       
-      <h1>Clínica Odontológica Santa Clara</h1>
+  <div class="logo-title">
+  <img src="logo.png" alt="Logo Clínica Odontológica Santa Clara" class="logo-img">
+  <h1>Clínica Odontológica Santa Clara</h1>
+</div>
+
       <nav>
         <a href="#">Inicio</a>
         <a href="#">Servicios</a>
@@ -588,11 +594,7 @@
       </div>
     </div>
 
-    <div id="widget-hora" aria-live="polite" aria-atomic="true" aria-label="Fecha y hora actuales">
-      🦷
-      <span id="fecha"></span>
-      <span id="hora"></span>
-    </div>
+
 
     <script>
       // Modo oscuro toggle
@@ -667,18 +669,7 @@
         }, 1500);
       }
 
-      // Widget fecha y hora
-      function actualizarHoraFecha() {
-        const fechaEl = document.getElementById("fecha");
-        const horaEl = document.getElementById("hora");
-        const ahora = new Date();
-        const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        fechaEl.textContent = ahora.toLocaleDateString('es-ES', opcionesFecha);
-        const hora = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        horaEl.textContent = hora;
-      }
-      setInterval(actualizarHoraFecha, 1000);
-      actualizarHoraFecha();
+
 
       // Slider imágenes con transición y flechas
       const images = ['dentista.jpg', 'dentista2.jpg', 'dentista3.jpg'];
@@ -875,9 +866,37 @@
 </section>
 
 <style>
+
+/* Estilo logo + título */
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-title .logo-img {
+  height: 70px; /* altura profesional */
+  width: auto;
+  object-fit: contain;
+  border-radius: 6px; /* esquinas suaves */
+  background: white; /* contraste elegante */
+  padding: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15); /* sombra sutil */
+}
+
+/* En móviles: logo más pequeño */
+@media (max-width: 768px) {
+  .logo-title {
+    gap: 8px;
+  }
+  .logo-title .logo-img {
+    height: 80px;
+  }
+}
+
 .form-section {
   padding: 30px;
-  background: #fff;
+  background: #26a69a;
 }
 .form-container {
   display: flex;
@@ -933,7 +952,7 @@
   font-size: 0.9rem;
 }
 .submit-btn:hover {
-  background-color: #004080;
+  background-color: #26a69a;
 }
 .form-right {
   flex: 1;
