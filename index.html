@@ -405,62 +405,78 @@
         background: #1DA851;
         outline: none;
       }
+
+      /* WIDGET FECHA Y HORA */
+      #widget-hora {
+        position: fixed;
+        top: 70px;
+        left: 10px;
+        background-color: rgba(30, 120, 180, 0.9);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        z-index: 9999;
+        text-align: center;
+        user-select: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      body.dark #widget-hora {
+        background-color: rgba(15, 74, 109, 0.9);
+        color: #b0d4f1;
+      }
+      #widget-hora span {
+        display: block;
+      }
+
       /* Responsive */
-/* Ajustes para móvil */
-@media (max-width: 768px) {
-  /* Ocultar flechas en móvil */
-  .arrow {
-    display: none;
-  }
-
-  /* Menú más compacto */
-  nav {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  nav a {
-    margin: 5px 10px;
-    font-size: 14px;
-  }
-
-  /* Hero adaptado */
-  .hero {
-    flex-direction: column;
-    padding: 20px 15px;
-  }
-  .hero-content {
-    max-width: 100%;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  .hero-image-wrapper img {
-    width: 100%;
-    height: auto;
-  }
-
-  /* Secciones */
-  .services, .specialists {
-    flex-direction: column;
-    align-items: center;
-  }
-  .card {
-    width: 90%;
-  }
-
-  /* Formulario */
-  .appointment-form {
-    flex-direction: column;
-  }
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
+      @media (max-width: 768px) {
+        nav {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        nav a {
+          margin: 5px 10px;
+          font-size: 14px;
+        }
+        .chat-box {
+          width: 90%;
+          right: 5%;
+          bottom: 80px;
+        }
+        .hero {
+          flex-direction: column;
+          padding: 40px 20px;
+          min-height: auto;
+        }
+        .hero-content {
+          max-width: 100%;
+          margin-bottom: 20px;
+        }
+        .hero-image-wrapper img {
+          width: 100%;
+          height: auto;
+          margin: 0 auto;
+        }
+        .arrow.arrow-left {
+          left: 10px !important;
+          border-radius: 50%;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .arrow.arrow-right {
+          right: 10px !important;
+          border-radius: 50%;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+      }
     </style>
   </head>
   <body>
 
     <header>
+      
       <h1>Clínica Odontológica Santa Clara</h1>
       <nav>
         <a href="#">Inicio</a>
@@ -570,6 +586,13 @@
         />
         <button id="sendBtn" aria-label="Enviar mensaje">Enviar</button>
       </div>
+    </div>
+
+    <div id="widget-hora" aria-live="polite" aria-atomic="true" aria-label="Fecha y hora actuales">
+      🦷
+      <span id="fecha"></span>
+      <span id="hora"></span>
+    </div>
 
     <script>
       // Modo oscuro toggle
@@ -643,6 +666,20 @@
           window.open(url, '_blank');
         }, 1500);
       }
+
+      // Widget fecha y hora
+      function actualizarHoraFecha() {
+        const fechaEl = document.getElementById("fecha");
+        const horaEl = document.getElementById("hora");
+        const ahora = new Date();
+        const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        fechaEl.textContent = ahora.toLocaleDateString('es-ES', opcionesFecha);
+        const hora = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        horaEl.textContent = hora;
+      }
+      setInterval(actualizarHoraFecha, 1000);
+      actualizarHoraFecha();
+
       // Slider imágenes con transición y flechas
       const images = ['dentista.jpg', 'dentista2.jpg', 'dentista3.jpg'];
       let currentIndex = 0;
@@ -953,7 +990,9 @@ Horario: ${horario}`;
 });
 </script>
 
+
   </body>
 </html>
+
 
 
